@@ -1,0 +1,49 @@
+body{
+    font-family: var(--font-family);
+    font-size: 12px;
+    color: var(--color-primary);
+}
+
+p{
+    color: var(--color-primary);
+}
+
+#btn-g6{
+    color: var(--color-light);
+    background-color: var(--color-secondary);
+    border-color: var(--color-tertiary);
+}
+#btn-g6:hover{
+    background-color: var(--color-tertiary);
+    border-color: var(--color-secondary);
+}
+#btn-profile{
+    background-color: var(--color-light);
+    color: var(--color-secondary);
+    border-radius: 25px;
+    border-color: var(--color-light);
+    border-style: none;
+}
+#btn-profile:hover{
+    background-color: var(--color-tertiary);
+    color: var(--color-light);
+}
+
+/* Inicio */
+.section__inicio{
+    height: 100vh;
+}
+.section__inicio .card-header{
+    padding: 20px 0;
+}
+.section__inicio-logo{
+    width: 45px;
+}
+
+/* Header */
+.bg-g6-header{
+    background-color: var(--color-secondary);
+}
+.bg-g6-header img{
+    width: 45px;
+}
