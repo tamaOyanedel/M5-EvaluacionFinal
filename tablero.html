@@ -47,36 +47,42 @@
         </nav>
     </header>
 
-    <main class="section__board my-5 layout-main">
+    <main class="section__board mb-4 layout-main">
+        <div class="container-fluid section__board-title py-4 mb-3">
+            <div class="container">
+                <h2>Gestión de Tareas Colaborativas</h1>
+            </div>
+        </div>
         <div class="container">
-            <h2>Gestión de Tareas Colaborativas</h1>
-            <section>
-                <h3>Usuarios</h2>
-                <form id="form-usuario">
-                    <input class="form-control" type="text" name="nombre" placeholder="Nombre del usuario" required>
-                    <input class="form-control" type="email" name="email" placeholder="Correo electrónico" required>
-                    <select class="form-select" name="rol" required>
-                        <option value="" disabled selected>Rol del usuario</option>
-                        <option value="Administrador">Administrador</option>
-                        <option value="Usuario">Usuario</option>
-                        <option value="Auditor">Auditor</option>
-                    </select>
-                    <input class="form-control" type="password" name="password" placeholder="Contraseña" required>
-                    <button type="submit" class="btn btn-purple">Agregar Usuario</button>
-                </form>
-                <ul id="usuarios-list"></ul>
-            </section>
-            <section>
-                <h3>Tareas</h2>
-                <form id="form-tarea">
-                    <input class="form-control" type="text" name="descripcion" placeholder="Descripción de la tarea" required>
-                    <select name="usuarioAsignado" id="usuarioAsignado" class="form-select">
-                        <option value="" disabled selected>Asignar a usuario</option>
-                    </select>
-                    <button type="submit" class="btn btn-purple">Agregar Tarea</button>
-                </form>
-                <ul id="tareas-list"></ul>
-            </section>
+            <div class="row">
+                <section class="col">
+                    <h4>Usuarios</h4>
+                    <form id="form-usuario">
+                        <input class="form-control mb-3" type="text" name="nombre" placeholder="Nombre del usuario" required>
+                        <input class="form-control mb-3" type="email" name="email" placeholder="Correo electrónico" required>
+                        <select class="form-select mb-3" name="rol" required>
+                            <option value="" disabled selected>Rol del usuario</option>
+                            <option value="Administrador">Administrador</option>
+                            <option value="Usuario">Usuario</option>
+                            <option value="Auditor">Auditor</option>
+                        </select>
+                        <input class="form-control mb-3" type="password" name="password" placeholder="Contraseña" required>
+                        <button type="submit" class="btn btn-purple">Agregar Usuario</button>
+                    </form>
+                    <ul id="usuarios-list"></ul>
+                </section>
+                <section class="col">
+                    <h4>Tareas</h4>
+                    <form id="form-tarea">
+                        <input class="form-control mb-3" type="text" name="descripcion" placeholder="Descripción de la tarea" required>
+                        <select name="usuarioAsignado" id="usuarioAsignado" class="form-select mb-3">
+                            <option value="" disabled selected>Asignar a usuario</option>
+                        </select>
+                        <button type="submit" class="btn btn-purple">Agregar Tarea</button>
+                    </form>
+                    <ul id="tareas-list"></ul>
+                </section>
+            </div>
         </div>
     </main>
 
