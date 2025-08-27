@@ -78,7 +78,8 @@ function login(correo, contrasena) {
 
 function cerrarSesion() {
   localStorage.removeItem("usuarioLogeado");
-  usuarioLogeado = null;
+  
+  window.location.href="/index.html"
 }
 
 
@@ -97,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (user) {
       console.log("✅ Login correcto:", user);
       alert(`Bienvenido ${user.nombre}!`);
-      // window.location.href = "/dashboard.html"; // redirigir
+      window.location.href = "/tablero.html"; // redirigir
     } else {
       alert("❌ Correo o contraseña incorrectos");
     }
