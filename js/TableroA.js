@@ -235,4 +235,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar
     renderUsuarios();
     renderTareas();
-});
+    // Muestra usuario logeado en el Nav
+    const usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado"));
+    const btnProfile = document.getElementById("profile");
+    if (usuarioLogeado && btnProfile) {
+    btnProfile.textContent = usuarioLogeado.nombre;
+}
+    // Cerrar sesion 
+    function cerrarSesion() {
+        localStorage.removeItem("usuarioLogeado");
+        window.location.href="/index.html"
+}
+    const btnLogOut = document.getElementById("logOut");
+    if (btnLogOut) {
+        btnLogOut.addEventListener("click", (e) => {
+        e.preventDefault(); 
+        cerrarSesion();     
+        });
+}
+}
+);
+
+
+
