@@ -19,7 +19,6 @@ class Tarea {
         this.estado = estado;
     }
 
-    // esta tarea debe tener un método para marcar como completada la tarea (Cristopher)
     marcarComoCompletada() {
         this.estado = 'completada';
     }
@@ -35,7 +34,7 @@ class GestorTareas {
     cargarDatos() {
         const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
         const tareas = JSON.parse(localStorage.getItem('tareas')) || [];
-        this.usuarios = usuarios.map(u => new Usuario(u.id, u.nombre));
+        this.usuarios = usuarios.map(u => new Usuario(u.id, u.nombre, u.rol, u.password));
         this.tareas = tareas.map(t => new Tarea(t.id, t.descripcion, t.asignadoA, t.estado));
     }
     guardarDatos() {
@@ -102,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formTarea = document.getElementById('form-tarea');
     const modalEditarUsuario = new bootstrap.Modal(document.getElementById('modal-editar-usuario'));
     const modalEditarTarea = new bootstrap.Modal(document.getElementById('modal-editar-tarea'));
+    const selectAsignadoA = document.getElementById("asignadoA");
 
     // Renderizar usuarios
     function renderUsuarios() {
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tareasList.innerHTML = '';
         gestor.tareas.forEach(tarea => {
             const li = document.createElement('li');
-            li.textContent = `${tarea.descripcion} [${tarea.estado}]`;
+            li.textContent = `${tarea.descripcion} [${tarea.estado}] - Asignado a: ${tarea.asignadoA ? (gestor.usuarios.find(u => u.id === tarea.asignadoA)?.nombre || 'Desconocido') : 'Nadie'}`;
             li.dataset.id = tarea.id;
             // Botón editar
             const btnEditar = document.createElement('button');
@@ -186,17 +186,18 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             // Selector de usuario para asignar
             const selectUsuario = document.createElement('select');
-            const optionNone = document.createElement('option');
-            optionNone.value = '';
-            optionNone.textContent = 'Sin asignar';
-            selectUsuario.appendChild(optionNone);
-            gestor.usuarios.forEach(usuario => {
-                const option = document.createElement('option');
-                option.value = usuario.id;
-                option.textContent = usuario.nombre;
-                if (tarea.asignadoA === usuario.id) option.selected = true;
-                selectUsuario.appendChild(option);
-            });
+            llenarSelectAsignadoA(selectUsuario);
+            // const optionNone = document.createElement('option');
+            // optionNone.value = '';
+            // optionNone.textContent = 'Sin asignar';
+            // selectUsuario.appendChild(optionNone);
+            // gestor.usuarios.forEach(usuario => {
+            //     const option = document.createElement('option');
+            //     option.value = usuario.id;
+            //     option.textContent = usuario.nombre;
+            //     if (tarea.asignadoA === usuario.id) option.selected = true;
+            //     selectUsuario.appendChild(option);
+            // });
             selectUsuario.onchange = () => {
                 gestor.asignarTarea(tarea.id, selectUsuario.value || null);
                 renderTareas();
@@ -217,6 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (nombre && rol && password) {
             gestor.agregarUsuario(nombre, rol, password);
             formUsuario.reset();
+            llenarSelectAsignadoA(selectAsignadoA);
             renderUsuarios();
         } else {
             alert('Por favor, complete todos los campos.');
@@ -233,8 +235,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Inicializar
+    const llenarSelectAsignadoA = (selectAsignadoA) => {
+        if (selectAsignadoA) {
+            selectAsignadoA.innerHTML = '<option value="" disabled selected>Asignar usuario</option>';
+            // selectAsignadoA.innerHTML = '';
+            gestor.usuarios.forEach(usuario => {
+                const option = document.createElement("option");
+                option.value = usuario.id;
+                option.textContent = usuario.nombre;
+                selectAsignadoA.appendChild(option);
+            });
+        }
+    };
+    llenarSelectAsignadoA(selectAsignadoA);
     renderUsuarios();
     renderTareas();
+    
     // Muestra usuario logeado en el Nav
     const usuarioLogeado = JSON.parse(localStorage.getItem("usuarioLogeado"));
     const btnProfile = document.getElementById("profile");
@@ -253,8 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cerrarSesion();     
         });
 }
-}
-);
+});
 
 
 
