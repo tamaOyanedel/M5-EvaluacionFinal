@@ -48,3 +48,10 @@ p{
 .bg-g6-header img{
     width: 45px;
 }
+
+/* Tablero */
+.section__board h2{
+    color: var(--color-primary);
+    font-family: var(--font-family);
+    font-weight: 600;
+}
