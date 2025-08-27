@@ -1,0 +1,182 @@
+[
+    {
+        "id": "1720264800000",
+        "descripcion": "Revisar correos",
+        "asignadoA": "1",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720272000000",
+        "descripcion": "Preparar informe semanal",
+        "asignadoA": "2",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720275600000",
+        "descripcion": "Actualizar base de datos",
+        "asignadoA": "3",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720282800000",
+        "descripcion": "Reunión con equipo",
+        "asignadoA": "1",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720286400000",
+        "descripcion": "Enviar propuesta al cliente",
+        "asignadoA": "2",
+        "estado": "completada"
+    },
+    {
+        "id": "1720290000000",
+        "descripcion": "Revisar documentación",
+        "asignadoA": "3",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720297200000",
+        "descripcion": "Planificar sprint",
+        "asignadoA": "1",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720300800000",
+        "descripcion": "Actualizar tareas",
+        "asignadoA": "2",
+        "estado": "completada"
+    },
+    {
+        "id": "1720304400000",
+        "descripcion": "Revisión de código",
+        "asignadoA": "3",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720311600000",
+        "descripcion": "Capacitación interna",
+        "asignadoA": "1",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720315200000",
+        "descripcion": "Enviar reporte de bugs",
+        "asignadoA": "2",
+        "estado": "completada"
+    },
+    {
+        "id": "1720318800000",
+        "descripcion": "Actualizar roadmap",
+        "asignadoA": "3",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720326000000",
+        "descripcion": "Reunión con cliente",
+        "asignadoA": "1",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720329600000",
+        "descripcion": "Preparar presentación",
+        "asignadoA": "2",
+        "estado": "completada"
+    },
+    {
+        "id": "1720333200000",
+        "descripcion": "Revisar entregables",
+        "asignadoA": "3",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720340400000",
+        "descripcion": "Actualizar inventario",
+        "asignadoA": "1",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720344000000",
+        "descripcion": "Enviar facturas",
+        "asignadoA": "2",
+        "estado": "completada"
+    },
+    {
+        "id": "1720347600000",
+        "descripcion": "Revisión de contratos",
+        "asignadoA": "3",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720354800000",
+        "descripcion": "Planificar reunión semanal",
+        "asignadoA": "1",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720358400000",
+        "descripcion": "Actualizar agenda",
+        "asignadoA": "2",
+        "estado": "completada"
+    },
+    {
+        "id": "1720362000000",
+        "descripcion": "Revisar tareas pendientes",
+        "asignadoA": "3",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720369200000",
+        "descripcion": "Enviar recordatorio",
+        "asignadoA": "1",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720372800000",
+        "descripcion": "Preparar reporte mensual",
+        "asignadoA": "2",
+        "estado": "completada"
+    },
+    {
+        "id": "1720376400000",
+        "descripcion": "Actualizar sistema",
+        "asignadoA": "3",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720383600000",
+        "descripcion": "Reunión de seguimiento",
+        "asignadoA": "1",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720387200000",
+        "descripcion": "Enviar resumen de reunión",
+        "asignadoA": "2",
+        "estado": "completada"
+    },
+    {
+        "id": "1720390800000",
+        "descripcion": "Revisar incidencias",
+        "asignadoA": "3",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720398000000",
+        "descripcion": "Actualizar plan de trabajo",
+        "asignadoA": "1",
+        "estado": "pendiente"
+    },
+    {
+        "id": "1720401600000",
+        "descripcion": "Enviar reporte financiero",
+        "asignadoA": "2",
+        "estado": "completada"
+    },
+    {
+        "id": "1720405200000",
+        "descripcion": "Revisión de inventario",
+        "asignadoA": "3",
+        "estado": "pendiente"
+    }
+   ]
