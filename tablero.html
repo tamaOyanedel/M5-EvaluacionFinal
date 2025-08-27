@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <script src="./js/TableroA.js"></script>
+    <script type="module" src="./js/tableroA.js"></script>
 </head>
 <!-- <body class="layout-column"> -->
 <body class="layout-column">
@@ -54,6 +54,7 @@
                 <h3>Usuarios</h2>
                 <form id="form-usuario">
                     <input class="form-control" type="text" name="nombre" placeholder="Nombre del usuario" required>
+                    <input class="form-control" type="email" name="email" placeholder="Correo electrónico" required>
                     <select class="form-select" name="rol" required>
                         <option value="" disabled selected>Rol del usuario</option>
                         <option value="Administrador">Administrador</option>
@@ -69,7 +70,7 @@
                 <h3>Tareas</h2>
                 <form id="form-tarea">
                     <input class="form-control" type="text" name="descripcion" placeholder="Descripción de la tarea" required>
-                    <select name="asignadoA" id="asignadoA" class="form-select">
+                    <select name="usuarioAsignado" id="usuarioAsignado" class="form-select">
                         <option value="" disabled selected>Asignar a usuario</option>
                     </select>
                     <button type="submit" class="btn btn-purple">Agregar Tarea</button>

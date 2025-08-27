@@ -1,28 +1,5 @@
-
-
-// Clase Usuario
-class Usuario {
-    constructor(id, nombre, rol, password) {
-        this.id = id;
-        this.nombre = nombre;
-        this.rol = rol;
-        this.password = password;
-    }
-}
-
-// Clase Tarea
-class Tarea {
-    constructor(id, descripcion, usuarioAsignado = null, estado = 'pendiente') {
-        this.id = id;
-        this.descripcion = descripcion;
-        this.usuarioAsignado = usuarioAsignado; // id del usuario asignado
-        this.estado = estado;
-    }
-
-    marcarComoCompletada() {
-        this.estado = 'completada';
-    }
-}
+import Usuario from './Usuario.js';
+import Tarea from './Tarea.js'; 
 
 // Gestor principal
 class GestorTareas {
@@ -34,23 +11,24 @@ class GestorTareas {
     cargarDatos() {
         const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
         const tareas = JSON.parse(localStorage.getItem('tareas')) || [];
-        this.usuarios = usuarios.map(u => new Usuario(u.id, u.nombre, u.rol, u.password));
-        this.tareas = tareas.map(t => new Tarea(t.id, t.descripcion, t.asignadoA, t.estado));
+        this.usuarios = usuarios.map(u => new Usuario(u.id, u.nombre, u.rol, u.password, u.email));
+        this.tareas = tareas.map(t => new Tarea(t.id, t.descripcion, t.usuarioAsignado, t.estado));
     }
     guardarDatos() {
         localStorage.setItem('usuarios', JSON.stringify(this.usuarios));
         localStorage.setItem('tareas', JSON.stringify(this.tareas));
     }
-    agregarUsuario(nombre, rol, password) {
-        const id = Date.now().toString();
-        const usuario = new Usuario(id, nombre, rol, password);
+    agregarUsuario(nombre, rol, password, email) {
+        // este id debería generarse leyendo el largo de usuarios +1
+        const id = this.usuarios.length + 1;
+        const usuario = new Usuario(id, nombre, rol, password, email);
         this.usuarios.push(usuario);
         this.guardarDatos();
         return usuario;
     }
     eliminarUsuario(id) {
         this.usuarios = this.usuarios.filter(u => u.id !== id);
-        this.tareas.forEach(t => { if (t.asignadoA === id) t.asignadoA = null; });
+        this.tareas.forEach(t => { if (t.usuarioAsignado === id) t.usuarioAsignado = null; });
         this.guardarDatos();
     }
     editarUsuario(id, nuevoNombre, nuevoRol, nuevoPassword) {
@@ -85,7 +63,7 @@ class GestorTareas {
     asignarTarea(tareaId, usuarioId) {
         const tarea = this.tareas.find(t => t.id === tareaId);
         if (tarea) {
-            tarea.asignadoA = usuarioId;
+            tarea.usuarioAsignado = usuarioId;
             this.guardarDatos();
         }
     }
@@ -94,6 +72,7 @@ class GestorTareas {
 // Inicialización y eventos
 
 document.addEventListener('DOMContentLoaded', () => {
+
     const gestor = new GestorTareas();
     const usuariosList = document.getElementById('usuarios-list');
     const tareasList = document.getElementById('tareas-list');
@@ -101,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formTarea = document.getElementById('form-tarea');
     const modalEditarUsuario = new bootstrap.Modal(document.getElementById('modal-editar-usuario'));
     const modalEditarTarea = new bootstrap.Modal(document.getElementById('modal-editar-tarea'));
-    const selectAsignadoA = document.getElementById("asignadoA");
+    const selectusuarioAsignado = document.getElementById("usuarioAsignado");
 
     // Renderizar usuarios
     function renderUsuarios() {
@@ -153,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tareasList.innerHTML = '';
         gestor.tareas.forEach(tarea => {
             const li = document.createElement('li');
-            li.textContent = `${tarea.descripcion} [${tarea.estado}] - Asignado a: ${tarea.asignadoA ? (gestor.usuarios.find(u => u.id === tarea.asignadoA)?.nombre || 'Desconocido') : 'Nadie'}`;
+            li.textContent = `${tarea.descripcion} [${tarea.estado}] - Asignado a: ${tarea.usuarioAsignado ? (gestor.usuarios.find(u => u.id === tarea.usuarioAsignado)?.nombre || 'Desconocido') : 'Nadie'}`;
             li.dataset.id = tarea.id;
             // Botón editar
             const btnEditar = document.createElement('button');
@@ -186,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             // Selector de usuario para asignar
             const selectUsuario = document.createElement('select');
-            llenarSelectAsignadoA(selectUsuario);
+            llenarSelectusuarioAsignado(selectUsuario);
             // const optionNone = document.createElement('option');
             // optionNone.value = '';
             // optionNone.textContent = 'Sin asignar';
@@ -195,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
             //     const option = document.createElement('option');
             //     option.value = usuario.id;
             //     option.textContent = usuario.nombre;
-            //     if (tarea.asignadoA === usuario.id) option.selected = true;
+            //     if (tarea.usuarioAsignado === usuario.id) option.selected = true;
             //     selectUsuario.appendChild(option);
             // });
             selectUsuario.onchange = () => {
@@ -215,11 +194,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const nombre = formUsuario.elements['nombre'].value.trim();
         const rol = formUsuario.elements['rol'].value.trim();
         const password = formUsuario.elements['password'].value.trim();
-        if (nombre && rol && password) {
-            gestor.agregarUsuario(nombre, rol, password);
+        const email = formUsuario.elements['email'].value.trim();
+
+        if (nombre && rol && password && email) {
+            gestor.agregarUsuario(nombre, rol, password, email);
             formUsuario.reset();
-            llenarSelectAsignadoA(selectAsignadoA);
+            llenarSelectusuarioAsignado(selectusuarioAsignado);
             renderUsuarios();
+            renderTareas();
         } else {
             alert('Por favor, complete todos los campos.');
         }
@@ -235,19 +217,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Inicializar
-    const llenarSelectAsignadoA = (selectAsignadoA) => {
-        if (selectAsignadoA) {
-            selectAsignadoA.innerHTML = '<option value="" disabled selected>Asignar usuario</option>';
-            // selectAsignadoA.innerHTML = '';
+    const llenarSelectusuarioAsignado = (selectusuarioAsignado) => {
+        if (selectusuarioAsignado) {
+            selectusuarioAsignado.innerHTML = '<option value="" disabled selected>Asignar usuario</option>';
+            // selectusuarioAsignado.innerHTML = '';
             gestor.usuarios.forEach(usuario => {
                 const option = document.createElement("option");
                 option.value = usuario.id;
                 option.textContent = usuario.nombre;
-                selectAsignadoA.appendChild(option);
+                selectusuarioAsignado.appendChild(option);
             });
         }
     };
-    llenarSelectAsignadoA(selectAsignadoA);
+    llenarSelectusuarioAsignado(selectusuarioAsignado);
     renderUsuarios();
     renderTareas();
     
