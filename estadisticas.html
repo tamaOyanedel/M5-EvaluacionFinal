@@ -3,58 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G6</title>
-     <!--Style-->
+
+    <title>G6 - Estadísticas</title>
+    <!--Style-->
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/style.css">
     <!--Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <!--Font-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
 </head>
 <body>
+    <!-- HEADER -->
+
     <header class="container-fluid sticky-top bg-g6-header">
         <nav class="navbar navbar-expand-lg">
             <div class="container d-flex justify-content-between">
                 <a class="navbar-brand" href="#">
                     <img src="/assets/logo/logo_white.png" alt="Logo G6">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <ul class="navbar-nav">
-                    <li class="nav-item me-2">
-                        <a href="/tablero.html"><button type="button" id="btn-board" class="link-g6 px-3"><i class="bi bi-grid-1x2"></i> Tablero</button></a><li></li>
-                    <li class="nav-item dropdown">
-                        <button type="button" id="btn-profile" class="link-g6" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person"></i>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-lg-end mt-2">
-                            <li><h6 class="dropdown-header">Cuenta</h6></li>
-                            <li><h5 class="dropdown-item-text" id="profile"></h5></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#" id="logOut">Cerrar sesión</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                <div class="profile">
+                    <button type="button" id="btn-profile" class="link-tch"><i class="bi bi-person"></i></button>
+                </div>
+
             </div>
         </nav>
     </header>
 
-    <main class="section__estadisticas my-5">
+
+    <!-- MAIN -->
+    <main class="section__estadisticas my-5 container">
+        <h1 class="text-center mb-4">📊 Estadísticas de Avance</h1>
+        
+        <!-- Botón de reinicio -->
+        <div class="text-center mb-4">
+            <button id="btnReset" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-repeat"></i> Reiniciar Datos
+            </button>
+        </div>
+
+        <!-- Tarjetas resumen -->
+        <div class="row g-4 text-center">
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 id="totalTareas" class="display-5">0</h2>
+                        <p class="text-muted mb-0">Total de Tareas</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 id="completadas" class="display-5">0</h2>
+                        <p class="text-success fw-bold mb-0">Tareas Completadas</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 id="pendientes" class="display-5">0</h2>
+                        <p class="text-danger fw-bold mb-0">Tareas Pendientes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barra de Progreso -->
+        <div class="mt-5">
+            <label class="form-label fw-bold">Progreso General</label>
+            <div class="progress" style="height: 25px;">
+                <div id="progressBar" class="progress-bar progress-bar-striped bg-success" 
+                     role="progressbar" style="width: 0%;" 
+                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    0%
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfico Circular -->
+        <div class="mt-5">
+            <h4 class="text-center mb-3">Distribución de Tareas</h4>
+            <canvas id="taskChart" style="max-height: 300px;"></canvas>
+        </div>
+
+        <!-- Gráfico de Barras por Usuario -->
+        <div class="mt-5">
+            <h4 class="text-center mb-3">Avance por Usuario</h4>
+            <canvas id="userChart" style="max-height: 400px;"></canvas>
+        </div>
     </main>
+
+    <!-- FOOTER -->
 
     <footer class="text-center border-top py-3">
         <p class="small">© 2025 G6</p>
     </footer>
 
     <!--Script-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-    <script src="/js/toast.js"></script>
-    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        class TaskManager {
+            constructor(tasks) {
+                this.tasks = tasks || [];
+            }
+            getTotalTasks() { return this.tasks.length; }
+            getCompletedTasks() { return this.tasks.filter(t => t.estado === "completada").length; }
+            getPendingTasks() { return this.tasks.filter(t => t.estado === "pendiente").length; }
+            getCompletionRate() {
+                return this.getTotalTasks() === 0 ? 0 :
+                    Math.round((this.getCompletedTasks() / this.getTotalTasks()) * 100);
+            }
+            getTasksByUser() {
+                const users = {};
+                this.tasks.forEach(t => {
+                    if (!users[t.asignadoA]) users[t.asignadoA] = { completadas: 0, pendientes: 0 };
+                    if (t.estado === "completada") users[t.asignadoA].completadas++;
+                    else users[t.asignadoA].pendientes++;
+                });
+                return users;
+            }
+        }
+
+        let taskChart, userChart;
+
+        async function loadTasks(forceReload = false) {
+            let tasks = JSON.parse(localStorage.getItem("tasks"));
+            if (!tasks || forceReload) {
+                try {
+                    const response = await fetch("js/tareasIniciales.json");
+                    tasks = await response.json();
+                    localStorage.setItem("tasks", JSON.stringify(tasks));
+                } catch (error) {
+                    console.error("Error al cargar js/tareasIniciales.json:", error);
+                    tasks = [];
+                }
+            }
+            return tasks;
+        }
+
+        async function initDashboard(forceReload = false) {
+            const tasks = await loadTasks(forceReload);
+            const manager = new TaskManager(tasks);
+
+            // Actualizar DOM
+            document.getElementById("totalTareas").textContent = manager.getTotalTasks();
+            document.getElementById("completadas").textContent = manager.getCompletedTasks();
+            document.getElementById("pendientes").textContent = manager.getPendingTasks();
+
+            // Barra de progreso
+            const progress = manager.getCompletionRate();
+            const progressBar = document.getElementById("progressBar");
+            progressBar.style.width = progress + "%";
+            progressBar.textContent = progress + "%";
+            progressBar.setAttribute("aria-valuenow", progress);
+
+            // Destruir gráficos anteriores si existen
+            if (taskChart) taskChart.destroy();
+            if (userChart) userChart.destroy();
+
+            // Gráfico circular
+            const ctx = document.getElementById("taskChart").getContext("2d");
+            taskChart = new Chart(ctx, {
+                type: "pie",
+                data: {
+                    labels: ["Completadas", "Pendientes"],
+                    datasets: [{
+                        data: [manager.getCompletedTasks(), manager.getPendingTasks()],
+                        backgroundColor: ["#28a745", "#dc3545"]
+                    }]
+                },
+                options: { responsive: true, plugins: { legend: { position: "bottom" } } }
+            });
+
+            // Gráfico de barras por usuario
+            const userData = manager.getTasksByUser();
+            const userLabels = Object.keys(userData).map(id => "Usuario " + id);
+            const completedData = Object.values(userData).map(u => u.completadas);
+            const pendingData = Object.values(userData).map(u => u.pendientes);
+
+            const ctx2 = document.getElementById("userChart").getContext("2d");
+            userChart = new Chart(ctx2, {
+                type: "bar",
+                data: {
+                    labels: userLabels,
+                    datasets: [
+                        { label: "Completadas", data: completedData, backgroundColor: "#28a745" },
+                        { label: "Pendientes", data: pendingData, backgroundColor: "#dc3545" }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true, ticks: { precision:0 } } }
+                }
+            });
+        }
+
+        // Botón para reiniciar datos
+        document.getElementById("btnReset").addEventListener("click", () => {
+            localStorage.removeItem("tasks");
+            initDashboard(true);
+        });
+
+        // Inicializar
+        initDashboard();
+    </script>
+
 </body>
 </html>

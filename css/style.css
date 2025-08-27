@@ -18,15 +18,30 @@ p{
     background-color: var(--color-tertiary);
     border-color: var(--color-secondary);
 }
+
+#btn-profile{
+   background-color: var(--color-light);
+    color: var(--color-secondary);
+    border-radius: 25px;
+    border-color: var(--color-light);
+    border-style: none;
+}
+
 .link-g6{
+
     background-color: var(--color-light);
     color: var(--color-secondary);
     border-radius: 25px;
     border-color: var(--color-light);
     border-style: none;
-    font-weight: 300;
+
 }
+#btn-profile:hover{
+
+    font-weight: 300;
+
 .link-g6:hover{
+main
     background-color: var(--color-tertiary);
     color: var(--color-light);
 }
