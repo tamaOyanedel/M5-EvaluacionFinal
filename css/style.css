@@ -20,29 +20,25 @@ p{
 }
 
 #btn-profile{
-   background-color: var(--color-light);
-    color: var(--color-secondary);
-    border-radius: 25px;
-    border-color: var(--color-light);
-    border-style: none;
-}
-
-.link-g6{
-
     background-color: var(--color-light);
     color: var(--color-secondary);
     border-radius: 25px;
     border-color: var(--color-light);
     border-style: none;
-
 }
 #btn-profile:hover{
-
-    /* font-weight: 300;
-
+    font-weight: 300;
+}
+.link-g6{
+    background-color: var(--color-light);
+    color: var(--color-secondary);
+    border-radius: 25px;
+    border-color: var(--color-light);
+    border-style: none;
+    font-weight: 300;
+}
 .link-g6:hover{
-main */
-    background-color: var(--color-tertiary); 
+    background-color: var(--color-tertiary);
     color: var(--color-light);
 }
 
@@ -66,7 +62,20 @@ main */
 }
 
 /* Tablero */
-.section__board h2{
+.section__board-title{
+    background-color: var(--color-light);
+}
+.section__board-title h2{
+    color: var(--color-primary);
+    font-family: var(--font-family);
+    font-weight: 600;
+}
+
+/* Estadísticas */
+.section__estadisticas-title{
+    background-color: var(--color-light);
+}
+.section__estadisticas-title h2{
     color: var(--color-primary);
     font-family: var(--font-family);
     font-weight: 600;
