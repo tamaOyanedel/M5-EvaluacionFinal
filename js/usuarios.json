@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "nombre": "Tamara",
+        "email": "admin@correo.com",
+        "password": "admin",
+        "rol": "admin"
+    },
+    {
+        "id": 2,
+        "nombre": "Sebastián",
+        "email": "supervisor@correo.com",
+        "password": "super",
+        "rol": "supervisor"
+    }
+]

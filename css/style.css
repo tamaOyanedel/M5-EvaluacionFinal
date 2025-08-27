@@ -38,11 +38,11 @@ p{
 }
 #btn-profile:hover{
 
-    font-weight: 300;
+    /* font-weight: 300;
 
 .link-g6:hover{
-main
-    background-color: var(--color-tertiary);
+main */
+    background-color: var(--color-tertiary); 
     color: var(--color-light);
 }
 
