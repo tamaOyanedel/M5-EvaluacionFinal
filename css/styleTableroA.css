@@ -1,0 +1,22 @@
+/* Layout para navbar arriba, footer abajo y main scrollable */
+.layout-column {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    height: 100vh;
+}
+
+.layout-main {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.layout-footer {
+    flex-shrink: 0;
+}
+
+.btn {
+    background-color: var(--color-secondary) !important;
+    color: var(--color-light) !important;
+}
