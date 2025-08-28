@@ -132,7 +132,8 @@ document.addEventListener('DOMContentLoaded', () => {
         tareasList.innerHTML = '';
         gestor.tareas.forEach(tarea => {
             const li = document.createElement('li');
-            li.textContent = `${tarea.descripcion} [${tarea.estado}] - Asignado a: ${tarea.usuarioAsignado ? (gestor.usuarios.find(u => u.id === tarea.usuarioAsignado)?.nombre || 'Desconocido') : 'Nadie'}`;
+            const usuarioAsignado = gestor.usuarios.find(u => u.id === Number(tarea.usuarioAsignado));
+            li.textContent = `${tarea.descripcion} [${tarea.estado}] - Asignado a: ${usuarioAsignado ? usuarioAsignado.nombre : 'Pendiente'}`;
             li.dataset.id = tarea.id;
             // Botón editar
             const btnEditar = document.createElement('button');
@@ -178,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
             //     selectUsuario.appendChild(option);
             // });
             selectUsuario.onchange = () => {
-                gestor.asignarTarea(tarea.id, selectUsuario.value || null);
+                gestor.asignarTarea(tarea.id, (selectUsuario.value || null));
                 renderTareas();
             };
             li.appendChild(btnEditar);
