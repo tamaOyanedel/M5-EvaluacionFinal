@@ -7,15 +7,13 @@
      <!--Style-->
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/styleTableroA.css">
     <!--Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!--Font-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <script type="module" src="./js/tableroA.js"></script>
 </head>
 <!-- <body class="layout-column"> -->
 <body class="layout-column">
@@ -32,14 +30,14 @@
                     <li class="nav-item me-2">
                         <a href="/estadisticas.html"><button type="button" id="btn-statistic" class="link-g6 px-3"><i class="bi bi-graph-up-arrow"></i> Ver estadísticas</button></a><li></li>
                     <li class="nav-item dropdown">
-                        <button type="button" id="btn-profile" class="link-g6" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button type="button" id="btn-profile" class="link-g6 px-3" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-lg-end mt-2">
                             <li><h6 class="dropdown-header">Cuenta</h6></li>
-                            <li><h5 class="dropdown-item-text" id="profile"></h5></li>
+                            <li><h5 class="dropdown-item-text" id="userName"></h5></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" id="logOut" href="#">Cerrar sesión</a></li>
+                            <li><a class="dropdown-item" id="btnLogOut" href="#">Cerrar sesión</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -53,110 +51,255 @@
                 <h2>Gestión de Tareas Colaborativas</h1>
             </div>
         </div>
-        <div class="container">
-            <div class="row">
-                <section class="col-12 col-md-4 col-lg-5">
-                    <h4>Usuarios</h4>
-                    <form id="form-usuario">
-                        <input class="form-control mb-3" type="text" name="nombre" placeholder="Nombre del usuario" required>
-                        <input class="form-control mb-3" type="email" name="email" placeholder="Correo electrónico" required>
-                        <select class="form-select mb-3" name="rol" required>
-                            <option value="" disabled selected>Rol del usuario</option>
-                            <option value="Administrador">Administrador</option>
-                            <option value="Usuario">Usuario</option>
-                            <option value="Auditor">Auditor</option>
-                        </select>
-                        <input class="form-control mb-3" type="password" name="password" placeholder="Contraseña" required>
-                        <button type="submit" class="btn btn-purple">Agregar Usuario</button>
-                    </form>
-                    <ul id="usuarios-list"></ul>
-                </section>
-                <section class="col-12 col-md-8 col-lg-7">
-                    <h4>Tareas</h4>
-                    <form id="form-tarea">
-                        <input class="form-control mb-3" type="text" name="descripcion" placeholder="Descripción de la tarea" required>
-                        <select name="usuarioAsignado" id="usuarioAsignado" class="form-select mb-3">
-                            <option value="" disabled selected>Asignar a usuario</option>
-                        </select>
-                        <button type="submit" class="btn btn-purple">Agregar Tarea</button>
-                    </form>
-                    <ul id="tareas-list"></ul>
-                </section>
+
+        <!-- Tabs -->
+        <div class="container my-4">
+            <ul class="nav nav-tabs" id="tabMenu" role="tablist">
+                <li class="nav-item">
+                <button class="nav-link active" id="tab-tareas" data-bs-toggle="tab" data-bs-target="#panel-tareas" type="button">Tareas</button>
+                </li>
+                <li class="nav-item">
+                <button class="nav-link" id="tab-usuarios" data-bs-toggle="tab" data-bs-target="#panel-usuarios" type="button">Usuarios</button>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <!-- Panel Tareas -->
+                <div class="tab-pane fade show active" id="panel-tareas">
+                    <div class="d-flex justify-content-between align-items-center my-3">
+                        <h3>Tablero de tareas</h3>
+                        <button class="btn btn-g6" data-bs-toggle="modal" data-bs-target="#modalNuevaTarea">
+                        <i class="bi bi-plus-circle"></i> Nueva Tarea
+                        </button>
+                    </div>
+
+                        <!-- Filtros -->
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                            <input type="text" id="buscar" class="form-control" placeholder="Buscar tarea...">
+                            </div>
+                            <div class="col-md-4">
+                            <select id="filtroUsuario" class="form-select">
+                                <option value="">Todos los usuarios</option>
+                            </select>
+                            </div>
+                            <div class="col-md-4">
+                            <select id="filtroEstado" class="form-select">
+                                <option value="">Todos los estados</option>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="en_progreso">En progreso</option>
+                                <option value="completada">Completada</option>
+                            </select>
+                            </div>
+                        </div>
+
+                        <!-- Kanban -->
+                        <div class="row">
+                            <div class="col-md-4">
+                            <h5>Pendiente</h5>
+                            <div id="col-pendiente" class="kanban-col" ondrop="drop(event, 'pendiente')" ondragover="allowDrop(event)"></div>
+                            </div>
+                            <div class="col-md-4">
+                            <h5>En progreso</h5>
+                            <div id="col-en-progreso" class="kanban-col" ondrop="drop(event, 'en_progreso')" ondragover="allowDrop(event)"></div>
+                            </div>
+                            <div class="col-md-4">
+                            <h5>Completadas</h5>
+                            <div id="col-completada" class="kanban-col" ondrop="drop(event, 'completada')" ondragover="allowDrop(event)"></div>
+                            </div>
+                        </div>
+
+                </div>
+
+                <!-- Panel Usuarios -->
+                <div class="tab-pane fade" id="panel-usuarios">
+                    <div class="d-flex justify-content-between align-items-center my-3">
+                        <h3>Gestor de Usuarios</h3>
+                        <button class="btn btn-g6" data-bs-toggle="modal" data-bs-target="#modalNuevoUsuario">
+                        <i class="bi bi-person-plus"></i> Nuevo Usuario
+                        </button>
+                    </div>
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Mail</th>
+                            <th>Rol</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tablaUsuarios"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </main>
+    
+        <!-- Toasts -->
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index:11">
+        <div id="toastContainer"></div>
+        </div>
 
-    <footer class="text-center border-top py-3 layout-footer">
+        <!-- Modal Nueva Tarea -->
+        <div class="modal fade" id="modalNuevaTarea" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nueva Tarea</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formNuevaTarea">
+                <div class="mb-3">
+                    <label class="form-label">Descripción</label>
+                    <input type="text" class="form-control" id="nuevaDescripcion" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Asignar a</label>
+                    <select id="nuevaUsuario" class="form-select"></select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Estado</label>
+                    <select id="nuevaEstado" class="form-select">
+                    <option value="pendiente">Pendiente</option>
+                    <option value="en_progreso">En progreso</option>
+                    <option value="completada">Completada</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-g6">Crear</button>
+                </form>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Modal Editar Tarea -->
+        <div class="modal fade" id="modalEditarTarea" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Tarea</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarTarea">
+                <input type="hidden" id="editarTareaId">
+                <div class="mb-3">
+                    <label class="form-label">Descripción</label>
+                    <input type="text" class="form-control" id="editarDescripcion" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Asignar a</label>
+                    <select id="editarUsuario" class="form-select"></select>
+                </div>
+                <div class="mb-3 form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="editarCompletada">
+                    <label class="form-check-label">Marcar como completada</label>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Estado</label>
+                    <select id="editarEstado" class="form-select">
+                    <option value="pendiente">Pendiente</option>
+                    <option value="en_progreso">En progreso</option>
+                    <option value="completada">Completada</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-g6">Guardar</button>
+                </form>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Modal Nuevo Usuario -->
+        <div class="modal fade" id="modalNuevoUsuario" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nuevo Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formNuevoUsuario">
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" id="nuevoUsuarioNombre" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Rol</label>
+                    <select id="nuevoUsuarioRol" class="form-select">
+                    <option value="admin">Admin</option>
+                    <option value="supervisor">Supervisor</option>
+                    <option value="usuario">Usuario</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="nuevoUsuarioEmail" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="nuevoUsuarioPassword" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-g6">Crear</button>
+                </form>
+            </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Modal Editar Usuario -->
+        <div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarUsuario">
+                <input type="hidden" id="editarUsuarioId">
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" id="editarUsuarioNombre" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="editarUsuarioEmail" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Rol</label>
+                    <select id="editarUsuarioRol" class="form-select">
+                    <option value="admin">Admin</option>
+                    <option value="supervisor">Supervisor</option>
+                    <option value="usuario">Usuario</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="editarUsuarioPassword" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-g6">Guardar cambios</button>
+                </form>
+
+                <hr>
+                <h6>Tareas asignadas</h6>
+                <ul id="listaTareasUsuario" class="list-group"></ul>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="text-center border-top py-3">
         <p class="small">© 2025 G6</p>
     </footer>
 
     <!--Script-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-    <!-- <script src="/js/toast.js"></script> -->
-
-  
-    <div class="modal fade" id="modal-editar-usuario" tabindex="-1" aria-labelledby="modal-editar-usuario-label" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal-editar-usuario-label">Editar Usuario</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="form-editar-usuario">
-                        <input type="hidden" name="id">
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" name="nombre" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="rol" class="form-label">Rol</label>
-                            <select class="form-select" name="rol" required>
-                                <option value="Administrador">Administrador</option>
-                                <option value="Usuario">Usuario</option>
-                                <option value="Auditor">Auditor</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" name="password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- modal para editar tarea -->
-    <div class="modal fade" id="modal-editar-tarea" tabindex="-1" aria-labelledby="modal-editar-tarea-label" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal-editar-tarea-label">Editar Tarea</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="form-editar-tarea">
-                        <input type="hidden" name="id">
-                        <div class="mb-3">
-                            <label for="descripcion" class="form-label">Descripción</label>
-                            <input type="text" class="form-control" name="descripcion" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="estado" class="form-label">Estado</label>
-                            <select class="form-select" name="estado" required>
-                                <option value="pendiente">🕒 Pendiente asignar</option>
-                                <option value="en_progreso">🔄 En Progreso</option>
-                                <option value="completada">✅ Completada</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/proteccionRuta.js"></script>
+    <script src="/js/tablero.js"></script>
 
 </body>
 </html>

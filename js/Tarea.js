@@ -1,14 +1,17 @@
-class Tarea {
-    constructor(id, descripcion, usuarioAsignado = null, estado = 'pendiente') {
-        this.id = id;
-        this.descripcion = descripcion;
-        this.usuarioAsignado = usuarioAsignado; // id del usuario asignado
-        this.estado = estado;
-    }
+export default class Tarea {
+  constructor(id, descripcion, usuarioAsignado, estado = "pendiente") {
+    this.id = Number(id);
+    this.descripcion = descripcion;
+    this.usuarioAsignado = usuarioAsignado ? Number(usuarioAsignado) : null;
+    this.estado = estado;
+  }
 
-    marcarComoCompletada() {
-        this.estado = 'completada';
-    }
+  toPlainObject() {
+    return {
+      id: this.id,
+      descripcion: this.descripcion,
+      usuarioAsignado: this.usuarioAsignado,
+      estado: this.estado,
+    };
+  }
 }
-
-export default Tarea;
