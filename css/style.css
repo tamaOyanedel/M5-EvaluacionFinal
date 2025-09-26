@@ -9,27 +9,17 @@ p{
     color: var(--color-primary);
 }
 
-#btn-g6{
+.btn-g6, .section__inicio .btn-g6, #form-usuario .btn-g6, #form-tarea .btn-g6, .tab-content .btn-g6, .modal .btn-g6{
     color: var(--color-light);
     background-color: var(--color-secondary);
     border-color: var(--color-tertiary);
 }
-#btn-g6:hover{
-    background-color: var(--color-tertiary);
+.btn-g6:hover, .section__inicio .btn-g6:hover, #form-usuario .btn-g6:hover, #form-tarea .btn-g6:hover, .tab-content .btn-g6:hover, .modal .btn-g6:hover{
+    color: var(--color-secondary);
+    background-color: var(--color-light);
     border-color: var(--color-secondary);
 }
-
-#btn-profile{
-    background-color: var(--color-light);
-    color: var(--color-secondary);
-    border-radius: 25px;
-    border-color: var(--color-light);
-    border-style: none;
-}
-#btn-profile:hover{
-    font-weight: 300;
-}
-.link-g6{
+.link-g6, .tarea-card .link-g6, .tabla-usuarios .link-g6{
     background-color: var(--color-light);
     color: var(--color-secondary);
     border-radius: 25px;
@@ -37,7 +27,7 @@ p{
     border-style: none;
     font-weight: 300;
 }
-.link-g6:hover{
+.link-g6:hover, .tarea-card .link-g6:hover, .tabla-usuarios .link-g6:hover{
     background-color: var(--color-tertiary);
     color: var(--color-light);
 }
@@ -70,6 +60,67 @@ p{
     font-family: var(--font-family);
     font-weight: 600;
 }
+#usuarios-list li{
+    list-style: none;
+}
+.kanban-col {
+    min-height: 200px; /* mantiene un área visible incluso vacía */
+    max-height: 70vh; /* Ajusta la altura visible */
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;  /* Scroll vertical solo cuando es necesario */
+    border: 1px solid #dee2e6; /* opcional, para delimitar columnas */
+    border-radius: 5px;
+    background-color: var(--color-dark); /* opcional, contraste ligero */
+    padding: 10px;
+}
+
+.kanban-col::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Tareas */
+.tarea-card {
+  cursor: grab;
+  margin-bottom: 0.5rem;
+  background-color: var(--color-secondary);
+  border-radius: 5px;
+}
+.tarea-card:active {
+  cursor: grabbing;
+}
+.tarea-card h6 {
+    color: var(--color-light);
+    padding: 5px;
+}
+.tarea-card p {
+    color: var(--color-secondary);
+    background-color: var(--color-light);
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+.droppable {
+  min-height: 200px;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+}
+.droppable.drag-over {
+  background-color: #e3f2fd;
+  border: 2px dashed #0d6efd;
+}
+.acciones-card {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: none;
+}
+
+.tarea-card:hover .acciones-card {
+  display: flex;
+}
+
 
 /* Estadísticas */
 .section__estadisticas-title{
@@ -79,4 +130,8 @@ p{
     color: var(--color-primary);
     font-family: var(--font-family);
     font-weight: 600;
+}
+#graficoTareas{
+    width: 350px !important;
+    height: 350px !important;
 }

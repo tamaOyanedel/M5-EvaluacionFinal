@@ -7,6 +7,8 @@
     --color-tertiary: #79838C;
     --color-light: #F2F2F2;
     --color-dark: #0D0D0D;
+    --bs-link-color: #9C9BBF !important;
+    --bs-link-hover-color: #79838C !important;
 
     /* Tipografías */
     --font-family: "Noto Sans", sans-serif;
